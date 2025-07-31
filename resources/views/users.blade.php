@@ -15,8 +15,13 @@
         </div>
         <div class="mb-3">
             <label>Image</label>
-            <input type="file" name="image" class="form-control" required>
+            <input type="file" name="image" id="imageInput" class="form-control" required onchange="previewImage(event)">
         </div>
+
+        <div class="mb-3">
+            <img id="preview" src="#" alt="Image Preview" class="img-thumbnail mt-2 d-none" style="max-width: 200px;">
+        </div>
+
         <button type="submit" class="btn btn-primary">Save User</button>
     </form>
 
@@ -48,4 +53,22 @@
         </tbody>
     </table>
 </div>
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('preview');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.classList.remove('d-none');
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
 @endsection
