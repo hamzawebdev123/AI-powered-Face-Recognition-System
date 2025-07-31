@@ -26,7 +26,8 @@ class UserController extends Controller
 }
 public function users()
 {
-    return view('users');
+    $users = User::all();
+    return view('users', compact('users'));
 }
 public function match(Request $request)
 {

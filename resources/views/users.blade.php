@@ -1,8 +1,9 @@
 @extends('layout.app')
+
 @section('content')
 <div class="container mt-5">
     <h2>Add User</h2>
-    <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data" class="border p-4 rounded bg-light">
+    <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data" class="border p-4 rounded bg-light mb-5">
         @csrf
         <div class="mb-3">
             <label>Name</label>
@@ -18,6 +19,33 @@
         </div>
         <button type="submit" class="btn btn-primary">Save User</button>
     </form>
-</div>
 
+    <h3>All Users</h3>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($users as $index => $user)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>
+                        <img src="{{ asset('images/' . $user->image) }}" width="80" class="img-thumbnail">
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="4" class="text-center">No users found.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
 @endsection
